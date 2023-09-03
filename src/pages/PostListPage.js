@@ -1,10 +1,11 @@
-import Button from '../components/common/Button';
+import Header from '../components/common/Header'; // Header가 두 개 있음
 
 const PostListPage = () => {
     return (
-        <div>
-            <Button>버튼</Button>
-        </div>
+        <>
+            <Header />
+            <div>안녕하세요!</div>
+        </>
     );
 };
 export default PostListPage;
