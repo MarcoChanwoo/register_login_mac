@@ -1,9 +1,9 @@
-import Header from '../components/common/Header'; // Header가 두 개 있음
+import HeaderContainer from '../containers/common/HeaderContainer';
 
 const PostListPage = () => {
     return (
         <>
-            <Header />
+            <HeaderContainer />
             <div>안녕하세요!</div>
         </>
     );
