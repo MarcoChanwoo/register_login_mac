@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 const TagBoxBlock = styled.div`
     width: 100%;
@@ -74,9 +74,9 @@ const TagList = React.memo(({ tags, onRemove }) => (
     </TagListBlock>
 ));
 
-const TagBox = () => {
+const TagBox = ({ tags, onChangeTags }) => {
     const [input, setInput] = useState('');
-    const [localTags, setLocatTags] = useState([]);
+    const [localTags, setLocalTags] = useState([]);
 
     const insertTag = useCallback(
         (tag) => {
@@ -88,17 +88,22 @@ const TagBox = () => {
                 // 이미 존재한다면 추가하지 않음
                 return;
             }
-            setLocatTags([...localTags, tag]);
+            const nextTags = [...localTags, tag];
+            setLocalTags(nextTags);
+            onChangeTags(nextTags);
         },
-        [localTags],
+        [localTags, onChangeTags],
     );
 
     const onRemove = useCallback(
         (tag) => {
-            setLocatTags(localTags.filter((t) => t !== tag));
+            const nextTags = localTags.filter((t) => t !== tag);
+            setLocalTags(nextTags);
+            onChangeTags(nextTags);
         },
-        [localTags],
+        [localTags, onChangeTags],
     );
+
     const onChange = useCallback((e) => {
         setInput(e.target.value);
     }, []);
@@ -111,6 +116,11 @@ const TagBox = () => {
         },
         [input, insertTag],
     );
+
+    // tags 값이 바뀔 때
+    useEffect(() => {
+        setLocalTags(tags);
+    }, [tags]);
 
     return (
         <TagBoxBlock>
