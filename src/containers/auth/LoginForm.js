@@ -61,6 +61,12 @@ const LoginForm = ({ history }) => {
     useEffect(() => {
         if (user) {
             navigate('/');
+            try {
+                // 로그인 상태 유지하기
+                localStorage.setItem('user', JSON.stringify(user));
+            } catch (e) {
+                console.log('localStorage is not working');
+            }
         }
     }, [navigate, user]);
 
